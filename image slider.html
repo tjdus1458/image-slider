@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>이미지 슬라이더</title>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // 변수를 선언합니다.
+                const width = 460;
+                const height = 300;
+                let current = 0;
+                // 함수를 선언합니다.
+                const moveTo = function () {
+                    $('.images').animate({
+                        left: -current * width
+                    }, 1000);
+                };
+                // 슬라이더 내부의 이미지 개수를 확인합니다.
+                const imageLength = $('.slider').find('.image').length;
+                // 슬라이더 버튼을 추가합니다.
+                for (let i = 0; i < imageLength; i++) {
+                    $('<button></button>')
+                    .attr('data-position', i)
+                    .text(i)
+                    .click(function () {
+                        current = $(this).attr('data-position');
+                        moveTo;
+                    })
+                    .insertBefore('.slider');
+                }
+                // 슬라이더 스타일을 설정합니다.
+                $('.slider').css({
+                    position: 'relative',
+                    width: width,
+                    height: height,
+                    overflow: 'hiddden'
+                });
+                $('.images').css({
+                    position: 'absolute',
+                    width: width * imageLength,
+                });
+                $('.image').css({
+                    margin: 0,
+                    padding: 0,
+                    width: width,
+                    height: height,
+                    display: 'block',
+                    float: 'left'
+                });
+                // 3초마다 슬라이더를 이동시킵니다.
+                setInterval(function () {
+                    current = current + 1;
+                    current = current % imageLength;
+                    moveTo();
+                }, 3000);
+            });
+        </script>
+    </head>
+    <body>
+        <div class = "slider">
+            <div class = "images">
+                <img class = "image" src = "https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg" />
+                <img class = "image" src = "https://product.cdn.cevaws.com/var/storage/images/_aliases/reference/media/feliway-2017/images/kor-kr/1_gnetb-7sfmbx49emluey4a/6341829-1-kor-KR/1_gNETb-7SfMBX49EMLUeY4A.jpg" />
+                <img class = "image" src = "https://cdn.ccdailynews.com/news/photo/202104/2050116_530468_210.png" />
+                <img class = "image" src = "https://images.mypetlife.co.kr/content/uploads/2019/10/09152640/izabelle-acheson-kvUTrJdsYg8-unsplash1.jpg" />
+                <div class = "image">
+                    <h1>이미지가 아닌 것</h1>
+                    <p>2302562 유서연</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
